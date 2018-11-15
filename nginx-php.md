@@ -13,88 +13,90 @@
 * yum install nginx -y
 
 
-2.安装MYSQL
-yum localinstall http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm
+#2.安装MYSQL
+* yum localinstall http://dev.mysql.com/get/mysql57-community-release-el7-7.noarch.rpm
 
-yum install mysql-community-server
+* yum install mysql-community-server
 
-//开启mysql
-service mysqld start
+* //开启mysql
+* service mysqld start
 
-//查看mysql的root账号的密码
-grep 'temporary password' /var/log/mysqld.log
+* //查看mysql的root账号的密码
+* grep 'temporary password' /var/log/mysqld.log
 
-//登录mysql
-mysql -uroot -p
+* //登录mysql
+* mysql -uroot -p
 
-//修改密码
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'Kayson@398635';
+* //修改密码
+* ALTER USER 'root'@'localhost' IDENTIFIED BY 'Kayson@398635';
 
-//修改root用户可远程登录
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Kayson@398635' WITH GRANT OPTION; 
+* //修改root用户可远程登录
+* GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'Kayson@398635' WITH GRANT OPTION; 
 
-//刷新
-flush privileges;
+* //刷新
+* flush privileges;
 
-3.安装php
+#3.安装php
 
-rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+* rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
-rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+* rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
-//查看
-yum search php72w
+* //查看
+* yum search php72w
 
-//更多模块请看http://www.cnblogs.com/hello-tl/p/9404655.html
-//安装php以及扩展
-yum install php72w php72w-fpm php72w-cli php72w-common php72w-devel php72w-gd php72w-pdo php72w-mysql php72w-mbstring php72w-bcmath php72w-mcrypt php72w-xml php72w-mysqlnd php72w-opcache php72w-soap php72w-pecl-imagick php72w-pecl-imagick-devel
-//开启服务
-service php-fpm start
+* //更多模块请看http://www.cnblogs.com/hello-tl/p/9404655.html
 
-//修改/etc/nginx/nginx.conf  使其支持php 见下
-//重启nginx
-service nginx restart
+#//安装php以及扩展
+* yum install php72w php72w-fpm php72w-cli php72w-common php72w-devel php72w-gd php72w-pdo php72w-mysql php72w-mbstring php72w-bcmath php72w-mcrypt php72w-xml php72w-mysqlnd php72w-opcache php72w-soap php72w-pecl-imagick php72w-pecl-imagick-devel
+* //开启服务
+* service php-fpm start
 
-4.安装redis
-yum install redis
-//修改配置 
+* //修改/etc/nginx/nginx.conf
+
+* //重启nginx
+* service nginx restart
+
+#4.安装redis
+* yum install redis
+* * //修改配置 
 vi /etc/redis.conf
-//daemonize yes 后台运行
-//appendonly yes 数据持久化
-service redis start
+* //daemonize yes 后台运行
+* //appendonly yes 数据持久化
+* service redis start
 
 
-5.安装php-redis扩展
-//先装git
-yum install git
+#5.安装php-redis扩展
+* //先装git
+* yum install git
 
-//git下扩展
-cd /usr/local/src
-git clone https://github.com/phpredis/phpredis.git
+* //git下扩展
+* cd /usr/local/src
+* git clone https://github.com/phpredis/phpredis.git
 
-//安装扩展
-cd phpredis
-phpize
+* //安装扩展
+* cd phpredis
+* phpize
 
-//修改php配置
-vi /etc/php.ini  添加extension=redis.so
+* //修改php配置
+* vi /etc/php.ini  添加extension=redis.so
 
-//重启php
-service php-fpm restart
+* //重启php
+* service php-fpm restart
 
-直接用pecl库安装扩展就好
-链接地址https://github.com/phpredis/phpredis/blob/develop/INSTALL.markdown
-yum install php72w-pear
-yum install gcc-c++
-pecl install redis
+* 直接用pecl库安装扩展就好
+* 链接地址https://github.com/phpredis/phpredis/blob/develop/INSTALL.markdown
+* yum install php72w-pear
+* yum install gcc-c++
+* pecl install redis
 
-安装composer
-curl -sS https://getcomposer.org/installer | php
-mv composer.phar /usr/local/bin/composer
+* 安装composer
+* curl -sS https://getcomposer.org/installer | php
+* mv composer.phar /usr/local/bin/composer
 
 
 
-[nginx引起的问题]
+#[nginx引起的问题]
 最后想起来了nginx的日志，就开始翻看nginx的error.log，结果发现了相应的错误记录：4511#4511: *11 "/data/www/index.html" is forbidden (13: Permission denied), client: 192.168.152.1（以前没有重视过log，现在发现它真是个好东西），直接将错误信息粘贴到百度。
 
 具体原因就是服务器的SELinux设置为了开启(enabled)状态。
