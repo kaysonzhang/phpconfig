@@ -1,3 +1,6 @@
+useradd -s /sbin/nologin www
+usermod -s /bin/bash www
+
 #使用EPEL方式安装nginx：
 
 * sudo yum install epel-release
