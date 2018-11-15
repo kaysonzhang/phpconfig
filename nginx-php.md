@@ -46,12 +46,12 @@ usermod -s /bin/bash www
 * rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 
 * //查看
-* yum search php72w
+* yum search php72w php72w-mysql hp72w-mysqlnd
 
 * //更多模块请看http://www.cnblogs.com/hello-tl/p/9404655.html
 
 #//安装php以及扩展
-* yum install php72w php72w-fpm php72w-cli php72w-common php72w-devel php72w-gd php72w-pdo php72w-mysql php72w-mbstring php72w-bcmath php72w-mcrypt php72w-xml php72w-mysqlnd php72w-opcache php72w-soap php72w-pecl-imagick php72w-pecl-imagick-devel
+* yum install php72w php72w-fpm php72w-cli php72w-common php72w-devel php72w-gd php72w-pdo php72w-mbstring php72w-bcmath php72w-mcrypt php72w-xml php72w-mysqlnd php72w-opcache php72w-soap php72w-pecl-imagick php72w-pecl-imagick-devel php72w-mysqlnd.x86_64
 * //开启服务
 * service php-fpm start
 
@@ -118,6 +118,24 @@ setenforce 0
 将配置文件中的SELINUX=enforcing修改为SELINUX=disabled即可，修改完成后需要重启下机器。
 
 这种方法应该是有效的，至少在我的机器中是通过该方式解决了问题。
+
+
+#【安装swoole】
+yum -y install postgresql-devel
+yum install openssl openssl-devel
+yum install nghttp2(没起作用)
+
+wget https://github.com/nghttp2/nghttp2/releases/download/v1.34.0/nghttp2-1.34.0.tar.gz
+$ tar xf nghttp2-X.Y.Z.tar.bz2
+$ cd nghttp2-X.Y.Z
+$ ./configure
+$ make
+$ make install
+
+php72w-mysqlnd这个不安装是报错的
+https://github.com/matyhtf/framework/issues/6
+
+pecl install swoole
 
 
 
