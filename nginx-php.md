@@ -1,16 +1,16 @@
-使用EPEL方式安装nginx：
+#使用EPEL方式安装nginx：
 
-sudo yum install epel-release
-yum update
-yum install nginx
+* sudo yum install epel-release
+* yum update
+* yum install nginx
 
-systemctl start nginx
-systemctl enable nginx
+* systemctl start nginx
+* systemctl enable nginx
 
-如果以上方法不行，请执行以下方法
+#如果以上方法不行，请执行以下方法
 
-rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
-yum install nginx -y
+* rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+* yum install nginx -y
 
 
 2.安装MYSQL
