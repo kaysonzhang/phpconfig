@@ -1,7 +1,0 @@
-'runoob.com' 
-<<<<<<< HEAD
-
-dsfadffdsaf
-=======
-Creating a new branch is quick.
->>>>>>> kaysonzhang1
